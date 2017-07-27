@@ -3,168 +3,147 @@
 <img src="https://i.imgur.com/bYwl7Vf.png" alt="Learn Regex">
 </p><br/>
 
-## What is Regular Expression?
+Translate by [Lee](https://github.com/LeeReindeer).
+翻译水平有限，如有谬误，欢迎评论改正或者Pull Request.
 
-> Regular expression is a group of characters or symbols which is used to find a specific pattern from a text. 
+[原文地址](https://github.com/zeeshanu/learn-regex)
 
-A regular expression is a pattern that is matched against a subject string from left to right. The word "Regular expression" is a 
-mouthful, you will usually find the term abbreviated as "regex" or "regexp". Regular expression is used for replacing a text within 
-a string, validating form, extract a substring from a string based upon a pattern match, and so much more.
+## 何为正则表达式?
+> 正则表达式是用来从文本中查找符合特定规则的字符串的一组字符或符号.
 
-Imagine you are writing an application and you want to set the rules when user choosing their username. We want the username can 
-contains letter, number, underscore and hyphen. We also want to limit the number of characters in username so it does not look ugly. 
-We use the following regular expression to validate a username:
+一个正则表达式被称为一个模式,为了从左到右匹配一系列目标字符串."Regular expression" 是个比较口头的称呼,通常你会将术语缩写成  "regex" 或者 "regexp".正则表达式不只可以用来替换一段文本中的字符,验证表单,根据匹配模式从字符串中提取字符,等等.
+
+想想如果你正在写一个用户管理的应用, 接着你想要给用户名设定一系列的限制.比如,用户名可以
+包含字母，数字，下划线和连字,但是有字数限制.
+这样,我们就可以用下图的正则表达式来验证用户名的合法性:
 
 <p align="center">
 <img src="https://i.imgur.com/UrDb9qc.png" alt="Regular expression">
 </p>
 
-Above regular expression can accept the strings `john_doe`, `jo-hn\_doe` and `john12\_as`. It does not match `Jo` because that string 
-contains uppercase letter and also it is too short.  
+上面的正则表达式可以匹配像 `john_doe`,`jo-hn_doe`,`john12_as` 这样的用户名.但是不能匹配 `Jo` ,因为它包含大写字母,而且也太短了.
 
-## Table of Contents 
+## 目录
 
-- [Basic Matchers](#1-basic-matchers)
-- [Meta character](#2-meta-characters)
-  - [Full stop](#21-full-stop)
-  - [Character set](#22-character-set)
-    - [Negated character set](#221-negated-character-set)
-  - [Repetitions](#23-repetitions)
-    - [The Star](#231-the-star)
-    - [The Plus](#232-the-plus)
-    - [The Question Mark](#233-the-question-mark)
-  - [Braces](#24-braces)
-  - [Character Group](#25-character-group)
-  - [Alternation](#26-alternation)
-  - [Escaping special character](#27-escaping-special-character)
-  - [Anchors](#28-anchors)
-    - [Caret](#281-caret)
-    - [Dollar](#282-dollar)
-- [Shorthand Character Sets](#3-shorthand-character-sets)
-- [Lookaround](#4-lookaround)
-  - [Positive Lookahead](#41-positive-lookahead)
-  - [Negative Lookahead](#42-negative-lookahead)
-  - [Positive Lookbehind](#43-positive-lookbehind)
-  - [Negative Lookbehind](#44-negative-lookbehind)
-- [Flags](#5-flags)
-  - [Case Insensitive](#51-case-insensitive)
-  - [Global search](#52-global-search)
-  - [Multiline](#53-multiline)
-- [Bonus](#bonus)
+- [基本语法](#1-基本语法)
+- [元字符](#2-元字符)
+  - [句点](#21-句点)
+  - [字符集合(Character class)](#22-字符集合)
+    - [排除型字符集合](#221-排除型字符集合)
+  - [重复符号](#23-重复符号)
+    - [星号](#231-星号)
+    - [加号](#232-加号)
+    - [问号](#233-问号)
+  - [大括号](#24-大括号)
+  - [或](#25-或)
+  - [字符组(Character group)](#26-字符组)
+  - [反斜杠](#27-反斜杠)
+  - [锚(Anchors)](#28-锚)
+    - [插入符号](#281-插入符号)
+    - [美元符号](#282-美元符号)
+  - [缩写字符集合](#3-缩写字符集合)
+  - [正反向预查](#4-正反向预查)
+    - [正向肯定预查](#41-正向肯定预查)
+    - [正向否定预查](#42-正向否定预查)
+    - [反向肯定预查](#43-反向肯定预查)
+    - [反向否定预查](#44-反向否定预查)
+  - [标志](#5-标志)
+    - [大小写不敏感](#51-大小写不敏感)
+    - [全局搜索](#52-全局搜索)
+    - [多行匹配](#53-多行匹配)
+  - [实例@^@](#实例)
 
-## 1. Basic Matchers
+## 1. 基本语法
 
-A regular expression is just a pattern of letters and digits that we used to search in a text.  For example the regular expression 
-`cat` means: the letter `c`, followed by the letter `a`, followed by the letter `t`. 
+一个正则表达式就是有字母和数字组成的"模式",我们用它来搜索一段文本.举个例子,`cat` 这个正则表达式表示:字母 `c` ,接着是 `a` ,再接着 `t`.
 
 <pre>
 "cat" => The <a href="#learn-regex"><strong>cat</strong></a> sat on the mat
 </pre>
 
-The regular expression `123` matches the string "123". The regular expression is matched against an input string by comparing each 
-character in the regular expression to each character in the input string, one after another. Regular expressions are normally
-case-sensitive so the regular expression `Cat` would not match the string "cat".
+正则表达式 `123` 匹配字符串"123".正则表达式将表达式中的每个字符和输入的每个字符逐个比较,来进行匹配的.正则表达式一般是大小写敏感的.所以表达式 `Cat` 不能匹配"cat".
 
-<pre>
+ <pre>
 "Cat" => The cat sat on the <a href="#learn-regex"><strong>Cat</strong></a>
 </pre>
 
-## 2. Meta Characters
+## 2. 元字符
 
-Meta characters are the building blocks of the regular expressions.  Meta characters do not stand for themselves but instead are 
-interpreted in some special way. Some meta characters have a special meaning that are written inside the square brackets. 
-The meta character are as follows:
+可以说元字符是构成正则表达式的"砖块". 元字符不单独出现,但可以以特殊的方式插入.一些有特殊含义的元字符会被写在方括号内.
+下面是元字符的表格:
 
-|Meta character|Description|
-|:----:|----|
-|.|Period matches any single character except a line break.|
-|[ ]|Character class. Matches any character contained between the square brackets.|
-|[^ ]|Negated character class. Matches any character that is not contained between the square brackets|
-|*|Matches 0 or more repetitions of the preceding symbol.|
-|+|Matches 1 or more repetitions of the preceding symbol.
-|?|Makes the preceding symbol optional.|
-|{n,m}|Braces. Matches at least "n" but not more than "m" repetitions of the preceding symbol.|
-|(xyz)|Character group. Matches the characters xyz in that exact order.|
-|&#124;|Alternation. Matches either the characters before or the characters after the symbol.|
-|&#92;|Escapes the next character. This allows you to match reserved characters <code>[ ] ( ) { } . * + ? ^ $ \ &#124;</code>|
-|^|Matches the beginning of the input.|
-|$|Matches the end of the input.|
+| 元字符 | 描述 |
+|--------|--------|
+|.       |匹配除"\n"以外的任意字符.|
+|[ ]     |字符集合(Character class).匹配方括号所包含的任意一个字符.|
+|[^ ] |排除型字符集合(Negated character class).匹配方括号不包含的任意一个字符.|
+|*|匹配前面的子表达式零次或多次.|
+|+|匹配前面的子表达式一次或多次.|
+|?|使前面的子表达式可选|
+|{n,m}|大括号.前面的子表达式最少匹配n次,最多匹配m次.|
+|(xyz)|字符组(Character group).按**顺序**匹配字符串"xyz".|
+|x&#124;y|匹配x或y.|
+|&#92;|将下一个字符标记为特殊字符.这可以用来匹配保留的字符: <code>[ ] ( ) { } . * + ? ^ $ \ &#124;</code>|
+|^|匹配输入字符串的开始位置|
+|$|匹配输入字符串的结束位置|
 
-## 2.1 Full stop
+## 2.1 句点
 
-Full stop `.` is the simplest example of meta character. The meta character `.` matches any single character. It will not match return 
-or new line characters. For example the regular expression `.ar` means: any character, followed by the letter `a`, followed by the 
-letter `r`.
+句点 `.` 是元字符中最简单的. 句点 `.` 匹配任意一个字符.但是**不会匹配"\n"**(换行符).比如说这个正则表达式 `.ar` 代表:任意的含有"ar"的字符串.
 
 <pre>
 ".ar" => The <a href="#learn-regex"><strong>car</strong></a> <a href="#learn-regex"><strong>par</strong></a>ked in the <a href="#learn-regex"><strong>gar</strong></a>age.
 </pre>
 
-## 2.2 Character set
-
-Character sets are also called character class. Square brackets are used to specify character sets. Use hyphen inside character set to 
-specify the characters range. The order of the character range inside square brackets doesn't matter. For example the regular 
-expression `[Tt]he` means: an uppercase `T` or lowercase `t`, followed by the letter `h`, followed by the letter `e`.
+## 2.2 字符集合
+字符集合也可以翻译成字符类(个人感觉还是字符集合比较符合它的特征).方括号 `[ ]` 用来指定字符集合,使用连字符可以指定字符范围.方括号内的字符顺序不重要.比如下面这个表达式 `[Tt]he` 表示:一个大写的 `T`或者是 小写的 `t` 接下来是 `h` ,再是 `e`.
 
 <pre>
 "[Tt]he" => <a href="#learn-regex"><strong>The</strong></a> car parked in <a href="#learn-regex"><strong>the</strong></a> garage.
 </pre>
 
-A period inside a character set, however, means a literal period. The regular expression `ar[.]` means: a lowercase character `a`, followed by letter `r`, followed by a period `.` character.
+然而一个方括号内的句点 `[.]`,表示匹配句点.比如正则表达式 `ar[.]` 代表一个 `a` ,接着是 `r`,再是一个 `.` 的符号.
 
 <pre>
 "ar[.]" => A garage is a good place to park a c<a href="#learn-regex"><strong>ar.</strong></a>
 </pre>
 
-### 2.2.1 Negated character set
+### 2.2.1 排除型字符集合
 
-In general the caret symbol represents the start of the string, but when it is typed after the opening square bracket it negates the 
-character set. For example the regular expression `[^c]ar` means: any character except `c`, followed by the character `a`, followed by 
-the letter `r`.
+本来元字符 `^` 表示输入字符的开始位置.但是当她在方括号内时她会排除字符集合内的字符.比如 `[^c]ar` 这个表达式,就表示:任意的除了 `c` 意外的字符,接着是 `a`,再接着是 `r`.
 
 <pre>
 "[^c]ar" => The car <a href="#learn-regex"><strong>par</strong></a>ked in the <a href="#learn-regex"><strong>gar</strong></a>age.
 </pre>
 
+## 2.3 重复符号
 
-## 2.3 Repetitions
+`+`,`*` 和 `?` 这几个元字符用来表示一个子表达式可以重复的次数.但是这些元字符在不同情况下有不同的含义.
 
-Following meta characters `+`, `*` or `?` are used to specify how many times a subpattern can occurs. These meta characters act 
-differently in different situations. 
-
-### 2.3.1 The Star
-
-The symbol `*` matches zero or more repetitions of the preceding matcher. The regular expression `a*` means: zero or more repetitions 
-of preceding lowercase character `a`. But if it appears after a character set or class that it finds the repetitions of the whole 
-character set. For example the regular expression `[a-z]*` means: any number of lowercase letters in a row.
+### 2.3.1 星号
+星号 `*` 表示匹配前面的子表示零次或多次.比如,正则表达式 `a*` 代表:匹配小写字母 `a` 零次或多次.但是当她出现在字符集合的后面时,她会匹配字符集合中的任意字符.比如 `[a-z]*` 代表:匹配任意的小写字母.
 
 <pre>
 "[a-z]*" => T<a href="#learn-regex"><strong>he</strong></a> <a href="#learn-regex"><strong>car</strong></a> <a href="#learn-regex"><strong>parked</strong></a> <a href="#learn-regex"><strong>in</strong></a> <a href="#learn-regex"><strong>the</strong></a> <a href="#learn-regex"><strong>garage</strong></a> #21.
 </pre>
 
-The `*` symbol can be used with the meta character `.` to match any string of characters `.*`. The `*` symbol can be used with the 
-whitespace character `\s` to match a string of whitespace characters. For example the expression `\s*cat\s*` means: zero or more 
-spaces, followed by lowercase character `c`, followed by lowercase character `a`, followed by lowercase character `t`, followed by 
-zero or more spaces.
+星号 `*` 还可以和元字符 `.` 组合成 `.*` 来匹配任意的字符串.也可以和空格符 `\s` 组合来匹配一连串的空格.比如表达式 `\s*cat\s*` 代表零个或多个空格,接下来是 小写字母 `c` ,接下来是 `a` ,接下来是 `t` ,再接下来又是零个或多个的空格.
 
 <pre>
 "\s*cat\s*" => The fat<a href="#learn-regex"><strong> cat </strong></a>sat on the <a href="#learn-regex"><strong>cat</strong></a>.
 </pre>
 
-### 2.3.2 The Plus
+### 2.3.2 加号
 
-The symbol `+` matches one or more repetitions of the preceding character. For example the regular expression `c.+t` means: lowercase 
-letter `c`, followed by any number of character, followed by the lowercase character `t`.
+加号 `+` 匹配前面的子表达式一次或多次.比如下面这个表达式 `c.+t` 表示一个 `c` ,接着可以是任意数目的任意字符,再接着是 `t`.
 
 <pre>
 "c.+t" => The fat <a href="#learn-regex"><strong>cat sat on the mat</strong></a>.
 </pre>
 
-### 2.3.3 The Question Mark
+### 2.3.3 问号
 
-In regular expression the meta character `?` makes the preceding character optional. This symbol matches zero or one instance of 
-the preceding character. For example the regular expression `[T]?he` means: Optional the uppercase letter `T`, followed by the lowercase 
-character `h`, followed by the lowercase character `e`.
+元字符 `?` 可以使前面的子表达式变成可选项.就是相当于匹配前面的子表达式零次或者一次.比如正则表达式 `[T]?th` 代表:可选的 大写字母 `T` ,接着是 `h` ,再是 `e` .
 
 <pre>
 "[T]he" => <a href="#learn-regex"><strong>The</strong></a> car is parked in the garage.
@@ -173,18 +152,15 @@ character `h`, followed by the lowercase character `e`.
 "[T]?he" => <a href="#learn-regex"><strong>The</strong></a> car is parked in t<a href="#learn-regex"><strong>he</strong></a> garage.
 </pre>
 
-## 2.4 Braces
+## 2.4 大括号
 
-In  regular expression braces that are also called quantifiers used to specify the number of times that a group of character or a 
-character can be repeated. For example the regular expression `[0-9]{2,3}` means: Match at least 2 digits but not more than 3 (
-characters in the range of 0 to 9).
+在正则表达式中，大括号也称为量词，用于指定一组字符或一个字符可以重复的次数。比如表达式 `[0-9]{2,3}` 表示:匹配2到3个数字.
 
 <pre>
 "[0-9]{2,3}" => The number was 9.<a href="#learn-regex"><strong>999</strong></a>7 but we rounded it off to <a href="#learn-regex"><strong>10</strong></a>.0.
 </pre>
 
-We can leave out the second number. For example the regular expression `[0-9]{2,}` means: Match 2 or more digits. If we also remove 
-the comma the regular expression `[0-9]{2}` means: Match exactly 2 digits.
+我们可以略去第二个数字.比如表达式 `[0-9]{2,}` 表示:匹配2个及以上个数字.
 
 <pre>
 "[0-9]{2,}" => The number was 9.<a href="#learn-regex"><strong>9997</strong></a> but we rounded it off to <a href="#learn-regex"><strong>10</strong></a>.0.
@@ -194,55 +170,38 @@ the comma the regular expression `[0-9]{2}` means: Match exactly 2 digits.
 "[0-9]{2}" => The number was 9.<a href="#learn-regex"><strong>99</strong></a><a href="#learn-regex"><strong>97</strong></a> but we rounded it off to <a href="#learn-regex"><strong>10</strong></a>.0.
 </pre>
 
-## 2.5 Character Group
+## 2.5 或
 
-Character group is a group of sub-pattern that is written inside Parentheses `(...)`. As we discussed before that in regular expression 
-if we put quantifier after character than it will repeats the preceding character. But if we put quantifier after a character group than 
-it repeats the whole character group. For example the regular expression `(ab)*` matches zero or more repetitions of the character "ab".
-We can also use the alternation `|` meta character inside character group. For example the regular expression `(c|g|p)ar` means: lowercase character `c`, 
-`g` or `p`, followed by character `a`, followed by character `r`.
-
-<pre>
-"(c|g|p)ar" => The <a href="#learn-regex"><strong>car</strong></a> is <a href="#learn-regex"><strong>par</strong></a>ked in the <a href="#learn-regex"><strong>gar</strong></a>age.
-</pre>
-
-## 2.6 Alternation
-
-In regular expression Vertical bar `|` is used to define alternation. Alternation is like a condition between multiple expressions. Now, 
-you maybe thinking that character set and alternation works the same way. But the big difference between character set and alternation 
-is that character set works on character level but alternation works on expression level. For example the regular expression 
-`(T|t)he|car` means: uppercase character `T` or lowercase `t`, followed by lowercase character `h`, followed by lowercase character `e` 
-or lowercase character `c`, followed by lowercase character `a`, followed by lowercase character `r`.
+正则表达式中,用 竖直条 `|` 表示逻辑或,她就像表达式之间的条件.现在你或许在想这不是和字符集合一样吗?但是她们之间的巨大差异是字符集合在字符级别的,而 `|` 在表达式级别.比如表达式 `(T|t)he|car` 表示:大字母 `T` 或是 `t`,接下来是 `h` 和 `e`.或者也可以匹配小写字母 `c`,接着是 `a` ,再接着是 `r` .
 
 <pre>
 "(T|t)he|car" => <a href="#learn-regex"><strong>The</strong></a> <a href="#learn-regex"><strong>car</strong></a> is parked in <a href="#learn-regex"><strong>the</strong></a> garage.
 </pre>
 
-## 2.7 Escaping special character
 
-Backslash `\` is used in regular expression to escape the next character. This allows to to specify a symbol as a matching character 
-including reserved characters `{ } [ ] / \ + * . $ ^ | ?`. To use a special character as a matching character prepend `\` before it. 
-For example the regular expression `.` is used to match any character except new line. Now to match `.` in an input string the regular
-expression `(f|c|m)at\.?` means: lowercase letter `f`, `c` or `m`, followed by lowercase character `a`, followed by lowercase letter 
-`t`, followed by optional `.` character.
+## 2.6 字符组
+
+字符组(Character group,注意与字符集合(Character class的区别))是一组写在圆括号 `(...)` 内的子表达式.上面已经讨论过,如果我们把表示重复的元字符(`*` `+` `?`)放在字符之后,她表示前面的字符重复若干次.但是当我们把它们放在字符组后面时,她表示重复整个字符组.比如 `(ab)*` 这个正则表达式匹配零次或多次字符串"ab".我们也可以把 `|` 放进字符组.比如 `(c|g|p)ar` 代表:小写字母 `c`,或 `g` ,或 `p` ,接着是 `a` 和 `r` .
+
+<pre>
+"(c|g|p)ar" => The <a href="#learn-regex"><strong>car</strong></a> is <a href="#learn-regex"><strong>par</strong></a>ked in the <a href="#learn-regex"><strong>gar</strong></a>age.
+</pre>
+
+## 2.7 反斜杠
+
+反斜杠 `\` 在正则表达式中用来对元字符 `{ } [ ] / \ + * . $ ^ | ?` 进行转义.把 `\` 作为前缀来使用转义字符.比如 `.` 本来表示匹配任意字符,除了换行符.现在这个例子则不同.`(f|c|m)at.\?` 表示 `f` 或 `c` 或是 `m` 接下来是 `a` 和 `t`,再接着是可选的 `.`(句号).
 
 <pre>
 "(f|c|m)at\.?" => The <a href="#learn-regex"><strong>fat</strong></a> <a href="#learn-regex"><strong>cat</strong></a> sat on the <a href="#learn-regex"><strong>mat.</strong></a>
 </pre>
 
-## 2.8 Anchors
+## 2.8 锚
 
-In regular expression to check if the matching symbol is the starting symbol or ending symbol of the input string for this purpose
-we use anchors. Anchors are of two types: First type is Caret `^` that check if the matching character is the start character of the 
-input and the second type is Dollar `$` that checks if matching character is the last character of the input string.
+在正则表达式中,检查输入字符串匹配的最后的字符和第一个字符,我们使用锚(Anchors).锚分为两类:第一类是插入符号 `^` 检查输入字符串的开始位置;第二类是美元符号 `$` 用来检查输入字符串的结束位置.
 
-### 2.8.1 Caret
+### 2.8.1 插入符号
 
-Caret `^` symbol is used to check if matching character is the first character of the input string. If we apply the following regular 
-expression `^a` (if a is the starting symbol) to input string `abc` it matches `a`. But if we apply regular expression `^b` on above 
-input string it does not match anything. Because in input string `abc` "b" is not the starting symbol. Let's take a look on another 
-regular expression `^(T|t)he` which means: uppercase character `T` or lowercase character `t` is the start symbol of the input string, 
-followed by lowercase character `h`, followed by lowercase character `e`.
+插入符号 `^` 用来检查输入字符串的开始位置.如果我们使用下面的表达式 `^a` (如果a是起始字符) 来匹配输入字符串 "abc" 她会匹配 `a` .但是如果使用 `^b` ,则不会匹配任何字符,因为"b"不是起始的字符.让我们来看看另一个正则表达式 `^(T|t)he` ,她表示:`T` 或 `t` 是起始的字符,接着是 `h` 和 `e` .
 
 <pre>
 "(T|t)he" => <a href="#learn-regex"><strong>The</strong></a> car is parked in <a href="#learn-regex"><strong>the</strong></a> garage.
@@ -252,11 +211,9 @@ followed by lowercase character `h`, followed by lowercase character `e`.
 "^(T|t)he" => <a href="#learn-regex"><strong>The</strong></a> car is parked in the garage.
 </pre>
 
-### 2.8.2 Dollar
+### 2.8.2 美元符号
 
-Dollar `$` symbol is used to check if matching character is the last character of the input string. For example regular expression 
-`(at\.)$` means: a lowercase character `a`, followed by lowercase character `t`, followed by a `.` character and the matcher 
-must be end of the string.
+美元符号 `$` 用来匹配输入字符串的结束位置.比如表达式 `(at\.)$` 表示 `a` 和 `t`, 接着是一个句号 `.`,句号必须是结尾.
 
 <pre>
 "(at\.)" => The fat c<a href="#learn-regex"><strong>at.</strong></a> s<a href="#learn-regex"><strong>at.</strong></a> on the m<a href="#learn-regex"><strong>at.</strong></a>
@@ -266,97 +223,77 @@ must be end of the string.
 "(at\.)$" => The fat cat sat on the m<a href="#learn-regex"><strong>at.</strong></a>
 </pre>
 
-##  3. Shorthand Character Sets
+## 3. 缩写字符集
 
-Regular expression provides shorthands for the commonly used character sets, which offer convenient shorthands for commonly used 
-regular expressions. The shorthand character sets are as follows:
+正则表达式为常用的字符集合提供了缩写.缩写的字符集如下:
 
-|Shorthand|Description|
+|缩写|描述|
 |:----:|----|
-|.|Any character except new line|
-|\w|Matches alphanumeric characters: `[a-zA-Z0-9_]`|
-|\W|Matches non-alphanumeric characters: `[^\w]`|
-|\d|Matches digit: `[0-9]`|
-|\D|Matches non-digit: `[^\d]`|
-|\s|Matches whitespace character: `[\t\n\f\r\p{Z}]`|
-|\S|Matches non-whitespace character: `[^\s]`|
+|.|匹配除"\n"外的任意字符|
+|\w|匹配字母和数字: `[a-zA-Z0-9_]`|
+|\W|匹配子母河数字以外的字符: `[^\w]`|
+|\d|匹配数字: `[0-9]`|
+|\D|匹配数字以外的字符: `[^\d]`|
+|\s|匹配空格字符: `[\t\n\f\r\p{Z}]`|
+|\S|匹配空格以外的字符: `[^\s]`|
 
-## 4. Lookaround
+## 4. 正反向预查
 
-Lookbehind and lookahead sometimes known as lookaround are specific type of ***non-capturing group*** (Use to match the pattern but not 
-included in matching list). Lookaheads are used when we have the condition that this pattern is preceded or followed by another certain 
-pattern. For example we want to get all numbers that are preceded by `$` character from the following input string `$4.44 and $10.88`. 
-We will use following regular expression `(?<=\$)[0-9\.]*` which means: get all the numbers which contains `.` character and preceded 
-by `$` character. Following are the lookarounds that are used in regular expressions:
+正向和反向预查是特殊的一类非获取匹配(***non-capturing group***,用来匹配子表达式但是不包含在匹配列表内.)正反向预查会检查一个子表达式在另一个子表达式之后或之前.比如我们想要从这个字符串 `$4.44 and $10.88` 中获取美元符号 `$` 之后的所有数字,我们可以使用这个表达式 `(?<=\$)[0-9\.]*` .她表示:匹配所有包含 `.` 和以 `$` 为前缀的数字.
+下面是所有的正反向预查:
 
-|Symbol|Description|
+|符号|描述|
 |:----:|----|
-|?=|Positive Lookahead|
-|?!|Negative Lookahead|
-|?<=|Positive Lookbehind|
-|?<!|Negative Lookbehind|
+|?=|正向肯定预查|
+|?!|正向否定预查|
+|?<=|反向肯定预查|
+|?<!|反向否定预查|
 
-### 4.1 Positive Lookahead
+### 4.1 正向肯定预查
 
-The positive lookahead asserts that the first part of the expression must be followed by the lookahead expression. The returned match
-only contains the text that is matched by the first part of the expression. To define a positive lookahead braces are used and within 
-those braces question mark with equal sign is used like this `(?=...)`. Lookahead expression is written after the equal sign inside 
-braces. For example the regular expression `(T|t)he(?=\sfat)` means: optionally match lowercase letter `t` or uppercase letter `T`, 
-followed by letter `h`, followed by letter `e`. In braces we define positive lookahead which tells regular expression engine to match
-`The` or `the` which are followed by the word `fat`. 
+正向肯定预查表示表达式的第一部分接下来必须是正向肯定表达式(lookahead expression).返回的匹配必须只包含来自表达式的第一部分的字符.我们用 `(?=...)` 来表示正向肯定预查.正向肯定表达式写在被括号包含的等号后面.比如 `(T|t)he(?=\sfat)` 代表:`T` 或 `t` 接着是 `h` 和 `e` .正向肯定预查的作用就是保证 `The` 或 `the` 接下来是 空格+`fat`.
 
-<pre>
+ <pre>
 "(T|t)he(?=\sfat)" => <a href="#learn-regex"><strong>The</strong></a> fat cat sat on the mat.
 </pre>
 
-### 4.2 Negative Lookahead
+### 4.2 正向否定预查
 
-Negative lookahead is used when we need to get all matches from input string that are not followed by a pattern. Negative lookahead 
-defined same as we define positive lookahead but the only difference is instead of equal `=` character we use negation `!` character 
-i.e. `(?!...)`. Let's take a look at the following regular expression `(T|t)he(?!\sfat)` which means: get all `The` or `the` words from 
-input string that are not followed by the word `fat` precedes by a space character.
+正向否定预查用来从输入字符串匹配那些字符接下来的字符是不匹配这个表达式的.正向否定预查的表示方法和正向肯定预查差不多,只是把 `=` 换成 `!` ,变成了 `(?!...)` .让我们来看看下面这个正则表达式 `(T|t)he(?!\sfat)`,她代表:匹配所有不跟着 空格+`fat` 的 `The` 或 `the`.
 
 <pre>
 "(T|t)he(?!\sfat)" => The fat cat sat on <a href="#learn-regex"><strong>the</strong></a> mat.
 </pre>
 
-### 4.3 Positive Lookbehind
+### 4.3 反向肯定预查
 
-Positive lookbehind is used to get all the matches that are preceded by a specific pattern. Positive lookbehind is denoted by 
-`(?<=...)`. For example the regular expression `(?<=(T|t)he\s)(fat|mat)` means: get all `fat` or `mat` words from input string that 
-are after the word `The` or `the`.
+反向肯定预查用来匹配以符合反向肯定表达式的字符为前缀的字符.反向肯定预查用 `(?<=...)` 来表示.比如这个表达式 `(?<=(T|t)he\s)(fat|mat)` 表示匹配所有 以 `The` 或 `the` 为前缀的 `fat` 或 `mat` .
 
 <pre>
 "(?<=(T|t)he\s)(fat|mat)" => The <a href="#learn-regex"><strong>fat</strong></a> cat sat on the <a href="#learn-regex"><strong>mat</strong></a>.
 </pre>
 
-### 4.4 Negative Lookbehind
+### 4.4 反向否定预查
 
-Negative lookbehind is used to get all the matches that are not preceded by a specific pattern. Negative lookbehind is denoted by 
-`(?<!...)`. For example the regular expression `(?&lt;!(T|t)he\s)(cat)` means: get all `cat` words from input string that 
-are after not after the word `The` or `the`.
+反向否定预查用来匹配以不符合表达式的字符为前缀的字符.反向否定预查用 `(?<!...)` 来表示.比如 `(?&lt;!(T|t)he\s)(cat)` 表示匹配所有不以 `The` 或 `the` +空格 为前缀的 `cat` .
 
 <pre>
 "(?&lt;!(T|t)he\s)(cat)" => The cat sat on <a href="#learn-regex"><strong>cat</strong></a>.
 </pre>
 
-## 5. Flags
+## 5. 标志
 
-Flags are also called modifiers because they modify the output of a regular expression. These flags can be used in any order or 
-combination, and are an integral part of the RegExp.
+标志也被称为修饰符，因为它们会改变正则表达式的输出.这些修饰符可以以任何顺序使用,并且是正则表达式的一部分.
 
-|Flag|Description|
-|:----:|----|
-|i|Case insensitive: Sets matching to be case-insensitive.|
-|g|Global Search: Search for a pattern throughout the input string.|
-|m|Multiline: Anchor meta character works on each line.|
+|标志|描述|
+|:----:|:----:|
+|i|大小写不敏感: 将匹配设置为不区分大小写。|
+|g|全局搜索: 搜索整个输入字符串|
+|m|多行匹配: 使锚 `^,$` 在每一行上都有效。|
 
-### 5.1 Case Insensitive
+### 5.1 大小写不敏感
 
-The `i` modifier is used to perform case-insensitive matching. For example the regular expression `/The/gi` means: uppercase letter 
-`T`, followed by lowercase character `h`, followed by character `e`. And at the end of regular expression the `i` flag tells the 
-regular expression engine to ignore the case. As you can see we also provided `g` flag because we want to search for the pattern in 
-the whole input string.
+`i` 修饰符表现为不区分大写小的匹配.比如表达式 `/The/gi` 表示: `T`,接着 `h` ,接着 `e`.`i`的作用是让正则表达式忽略大小写.你可以看到我们也是用来修饰符 `g`,因为我们想要搜索整个输入的字符串.
 
 <pre>
 "The" => <a href="#learn-regex"><strong>The</strong></a> fat cat sat on the mat.
@@ -366,15 +303,9 @@ the whole input string.
 "/The/gi" => <a href="#learn-regex"><strong>The</strong></a> fat cat sat on <a href="#learn-regex"><strong>the</strong></a> mat.
 </pre>
 
-### 5.2 Global search
+### 5.2 全局搜索
 
-
-The `g` modifier is used to perform a global match (find all matches rather than stopping after the first match). For example the 
-regular expression`/.(at)/g` means: any character except new line, followed by lowercase character `a`, followed by lowercase 
-character `t`. Because we provided `g` flag at the end of the regular expression now it will find every matches from whole input 
-string.
-
-
+修饰符 `g` 可以进行全局搜索(找到所有符合的,而不是找到一个就停止).比如 `/.(at)/g` 表示除了"\n"的任何字符,接下来是 `at` 因为我们用来修饰符 `g` ,下载她会找到每一个匹配的字符串.
 
 <pre>
 ".(at)" => The <a href="#learn-regex"><strong>fat</strong></a> cat sat on the mat.
@@ -384,12 +315,9 @@ string.
 "/.(at)/g" => The <a href="#learn-regex"><strong>fat</strong></a> <a href="#learn-regex"><strong>cat</strong></a> <a href="#learn-regex"><strong>sat</strong></a> on the <a href="#learn-regex"><strong>mat</strong></a>.
 </pre>
 
-### 5.3 Multiline
+### 5.3 多行匹配
 
-The `m` modifier is used to perform a multi line match. As we discussed earlier anchors `(^, $)` are used to check if pattern is 
-the beginning of the input or end of the input string. But if we want that anchors works on each line we use `m` flag. For example the
-regular expression `/at(.)?$/gm` means: lowercase character `a`, followed by lowercase character `t`, optionally anything except new 
-line. And because of `m` flag now regular expression engine matches pattern at the end of each line in a string.
+修饰符 `m` 可以用来进行多行匹配.我们之前说过的锚 `^,$` 是用来检查输入文本的开始位置和结束位置的.但是如果我们想要锚在每一行上都有效,我们就要使用 `m` 修饰符.比如表达式 `/at(.)?$/gm` 代表:`a` 接着是 `t`,再是一个可选的任意除换行符之外的字符.因为有修饰符 `m` ,所以正则表达式引擎会匹配每一行的末尾. 
 
 <pre>
 "/.at(.)?$/" => The fat
@@ -403,33 +331,26 @@ line. And because of `m` flag now regular expression engine matches pattern at t
                   on the <a href="#learn-regex"><strong>mat.</strong></a>
 </pre>
 
-## Bonus
+## 实例
 
-* *Positive Integers*: `^\d+$`
-* *Negative Integers*: `^-\d+$`
-* *US Phone Number*: `^+?[\d\s]{3,}$`
-* *US Phone with code*: `^+?[\d\s]+(?[\d\s]{10,}$`
-* *Integers*: `^-?\d+$`
-* *Username*: `^[\w\d_.]{4,16}$`
-* *Alpha-numeric characters*: `^[a-zA-Z0-9]*$`
-* *Alpha-numeric characters with spaces*: `^[a-zA-Z0-9 ]*$`
-* *Password*: `^(?=^.{6,}$)((?=.*[A-Za-z0-9])(?=.*[A-Z])(?=.*[a-z]))^.*$`
-* *email*: `^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4})*$`
-* *IPv4 address*: `^((?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))*$`
-* *Lowercase letters only*: `^([a-z])*$`
-* *Uppercase letters only*: `^([A-Z])*$`
-* *URL*: `^(((http|https|ftp):\/\/)?([[a-zA-Z0-9]\-\.])+(\.)([[a-zA-Z0-9]]){2,4}([[a-zA-Z0-9]\/+=%&_\.~?\-]*))*$`
-* *VISA credit card numbers*: `^(4[0-9]{12}(?:[0-9]{3})?)*$`
-* *Date (MM/DD/YYYY)*: `^(0?[1-9]|1[012])[- /.](0?[1-9]|[12][0-9]|3[01])[- /.](19|20)?[0-9]{2}$`
-* *Date (YYYY/MM/DD)*: `^(19|20)?[0-9]{2}[- /.](0?[1-9]|1[012])[- /.](0?[1-9]|[12][0-9]|3[01])$`
-* *MasterCard credit card numbers*: `^(5[1-5][0-9]{14})*$`
-
-## Contribution
-
-* Report issues
-* Open pull request with improvements
-* Spread the word 
-* Reach out to me directly at ziishaned@gmail.com or [![Twitter URL](https://img.shields.io/twitter/url/https/twitter.com/ziishaned.svg?style=social&label=Follow%20%40ziishaned)](https://twitter.com/ziishaned)
+- *正数*： `^\d+$`
+- *负数*: `^-\d+$`
+- *美国电话号码* `^+?[\d\s]{3,}$`
+- *区号+美国电话* `^+?[\d\s]+(?[\d\s]{10,}$`
+- *整数*: `^-?\d+$`
+- *用户名*: `^[\w\d_.]{4,16}$`
+- *字母和数字*: `^[a-zA-Z0-9]$`
+- *带空格的字母数字*: `^[a-zA-Z0-9 ]$`
+- *密码*: `^(?=^.{6,}$)((?=.*[A-Za-z0-9])(?=.*[A-Z])(?=.*[a-z]))^.*$`
+- *邮箱*: `^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4})*$`
+- *IPv4地址*: `^((?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))*$`
+- *小写字母*: `^([a-z])$` 
+- *大写字母*: `^([A-Z])$` 
+- *URL*: `^(((http|https|ftp):\/\/)?([[a-zA-Z0-9]\-\.])+(\.)([[a-zA-Z0-9]]){2,4}([[a-zA-Z0-9]\/+=%&_\.~?\-]*))*$`
+- *日期(MM/DD/YYYY)*: `^(0?[1-9]|1[012])[- /.](0?[1-9]|[12][0-9]|3[01])[- /.]([12][0-9])?[0-9]{2}$` 
+- *日期(YYYY/MM/DD)*: `^([12][0-9])?[0-9]{2}[- /.](0?[1-9]|1[012])[- /.](0?[1-9]|[12][0-9]|3[01])$`
+- *万事达信用卡号码*: `^(5[1-5][0-9]{14})*$`
+- *VISA信用卡号码*: `^(4[0-9]{12}(?:[0-9]{3})?)*$` 
 
 ## License
 
