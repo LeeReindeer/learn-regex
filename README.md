@@ -61,11 +61,15 @@ Translate by [Lee](https://github.com/LeeReindeer).
 "cat" => The <a href="#learn-regex"><strong>cat</strong></a> sat on the mat
 </pre>
 
+[测试一下](https://regex101.com/r/FOq5Nb/1)
+
 正则表达式 `123` 匹配字符串"123".正则表达式将表达式中的每个字符和输入的每个字符逐个比较,来进行匹配的.正则表达式一般是大小写敏感的.所以表达式 `Cat` 不能匹配"cat".
 
  <pre>
 "Cat" => The cat sat on the <a href="#learn-regex"><strong>Cat</strong></a>
 </pre>
+
+[测试一下](https://regex101.com/r/jw4Vi6/1)
 
 ## 2. 元字符
 
@@ -95,6 +99,8 @@ Translate by [Lee](https://github.com/LeeReindeer).
 ".ar" => The <a href="#learn-regex"><strong>car</strong></a> <a href="#learn-regex"><strong>par</strong></a>ked in the <a href="#learn-regex"><strong>gar</strong></a>age.
 </pre>
 
+[测试一下](https://regex101.com/r/xc9GkU/1)
+
 ## 2.2 字符集合
 字符集合也可以翻译成字符类(个人感觉还是字符集合比较符合它的特征).方括号 `[ ]` 用来指定字符集合,使用连字符可以指定字符范围.方括号内的字符顺序不重要.比如下面这个表达式 `[Tt]he` 表示:一个大写的 `T`或者是 小写的 `t` 接下来是 `h` ,再是 `e`.
 
@@ -102,11 +108,15 @@ Translate by [Lee](https://github.com/LeeReindeer).
 "[Tt]he" => <a href="#learn-regex"><strong>The</strong></a> car parked in <a href="#learn-regex"><strong>the</strong></a> garage.
 </pre>
 
+[测试一下](https://regex101.com/r/2ITLQ4/1)
+
 然而一个方括号内的句点 `[.]`,表示匹配句点.比如正则表达式 `ar[.]` 代表一个 `a` ,接着是 `r`,再是一个 `.` 的符号.
 
 <pre>
 "ar[.]" => A garage is a good place to park a c<a href="#learn-regex"><strong>ar.</strong></a>
 </pre>
+
+[测试一下](https://regex101.com/r/wL3xtE/1)
 
 ### 2.2.1 排除型字符集合
 
@@ -115,6 +125,8 @@ Translate by [Lee](https://github.com/LeeReindeer).
 <pre>
 "[^c]ar" => The car <a href="#learn-regex"><strong>par</strong></a>ked in the <a href="#learn-regex"><strong>gar</strong></a>age.
 </pre>
+
+[测试一下](https://regex101.com/r/nNNlq3/1)
 
 ## 2.3 重复符号
 
@@ -127,11 +139,15 @@ Translate by [Lee](https://github.com/LeeReindeer).
 "[a-z]*" => T<a href="#learn-regex"><strong>he</strong></a> <a href="#learn-regex"><strong>car</strong></a> <a href="#learn-regex"><strong>parked</strong></a> <a href="#learn-regex"><strong>in</strong></a> <a href="#learn-regex"><strong>the</strong></a> <a href="#learn-regex"><strong>garage</strong></a> #21.
 </pre>
 
+[测试一下](https://regex101.com/r/7m8me5/1)
+
 星号 `*` 还可以和元字符 `.` 组合成 `.*` 来匹配任意的字符串.也可以和空格符 `\s` 组合来匹配一连串的空格.比如表达式 `\s*cat\s*` 代表零个或多个空格,接下来是 小写字母 `c` ,接下来是 `a` ,接下来是 `t` ,再接下来又是零个或多个的空格.
 
 <pre>
 "\s*cat\s*" => The fat<a href="#learn-regex"><strong> cat </strong></a>sat on the <a href="#learn-regex"><strong>cat</strong></a>.
 </pre>
+
+[测试一下](https://regex101.com/r/gGrwuz/1)
 
 ### 2.3.2 加号
 
@@ -140,6 +156,8 @@ Translate by [Lee](https://github.com/LeeReindeer).
 <pre>
 "c.+t" => The fat <a href="#learn-regex"><strong>cat sat on the mat</strong></a>.
 </pre>
+
+[测试一下](https://regex101.com/r/Dzf9Aa/1)
 
 ### 2.3.3 问号
 
@@ -152,6 +170,8 @@ Translate by [Lee](https://github.com/LeeReindeer).
 "[T]?he" => <a href="#learn-regex"><strong>The</strong></a> car is parked in t<a href="#learn-regex"><strong>he</strong></a> garage.
 </pre>
 
+[测试一下](https://regex101.com/r/cIg9zm/1)
+
 ## 2.4 大括号
 
 在正则表达式中，大括号也称为量词，用于指定一组字符或一个字符可以重复的次数。比如表达式 `[0-9]{2,3}` 表示:匹配2到3个数字.
@@ -160,15 +180,21 @@ Translate by [Lee](https://github.com/LeeReindeer).
 "[0-9]{2,3}" => The number was 9.<a href="#learn-regex"><strong>999</strong></a>7 but we rounded it off to <a href="#learn-regex"><strong>10</strong></a>.0.
 </pre>
 
+[测试一下](https://regex101.com/r/juM86s/1)
+
 我们可以略去第二个数字.比如表达式 `[0-9]{2,}` 表示:匹配2个及以上个数字.
 
 <pre>
 "[0-9]{2,}" => The number was 9.<a href="#learn-regex"><strong>9997</strong></a> but we rounded it off to <a href="#learn-regex"><strong>10</strong></a>.0.
 </pre>
 
+[测试一下](https://regex101.com/r/Gdy4w5/1)
+
 <pre>
 "[0-9]{2}" => The number was 9.<a href="#learn-regex"><strong>99</strong></a><a href="#learn-regex"><strong>97</strong></a> but we rounded it off to <a href="#learn-regex"><strong>10</strong></a>.0.
 </pre>
+
+[测试一下](https://regex101.com/r/gqajq8/1)
 
 ## 2.5 或
 
@@ -178,6 +204,7 @@ Translate by [Lee](https://github.com/LeeReindeer).
 "(T|t)he|car" => <a href="#learn-regex"><strong>The</strong></a> <a href="#learn-regex"><strong>car</strong></a> is parked in <a href="#learn-regex"><strong>the</strong></a> garage.
 </pre>
 
+[测试一下](https://regex101.com/r/fBXyX0/1)
 
 ## 2.6 字符组
 
@@ -187,6 +214,8 @@ Translate by [Lee](https://github.com/LeeReindeer).
 "(c|g|p)ar" => The <a href="#learn-regex"><strong>car</strong></a> is <a href="#learn-regex"><strong>par</strong></a>ked in the <a href="#learn-regex"><strong>gar</strong></a>age.
 </pre>
 
+[测试一下](https://regex101.com/r/tUxrBG/1)
+
 ## 2.7 反斜杠
 
 反斜杠 `\` 在正则表达式中用来对元字符 `{ } [ ] / \ + * . $ ^ | ?` 进行转义.把 `\` 作为前缀来使用转义字符.比如 `.` 本来表示匹配任意字符,除了换行符.现在这个例子则不同.`(f|c|m)at.\?` 表示 `f` 或 `c` 或是 `m` 接下来是 `a` 和 `t`,再接着是可选的 `.`(句号).
@@ -194,6 +223,8 @@ Translate by [Lee](https://github.com/LeeReindeer).
 <pre>
 "(f|c|m)at\.?" => The <a href="#learn-regex"><strong>fat</strong></a> <a href="#learn-regex"><strong>cat</strong></a> sat on the <a href="#learn-regex"><strong>mat.</strong></a>
 </pre>
+
+[测试一下](https://regex101.com/r/DOc5Nu/1)
 
 ## 2.8 锚
 
@@ -207,9 +238,13 @@ Translate by [Lee](https://github.com/LeeReindeer).
 "(T|t)he" => <a href="#learn-regex"><strong>The</strong></a> car is parked in <a href="#learn-regex"><strong>the</strong></a> garage.
 </pre>
 
+[测试一下](https://regex101.com/r/5ljjgB/1)
+
 <pre>
 "^(T|t)he" => <a href="#learn-regex"><strong>The</strong></a> car is parked in the garage.
 </pre>
+
+[测试一下](https://regex101.com/r/jXrKne/1)
 
 ### 2.8.2 美元符号
 
@@ -219,9 +254,13 @@ Translate by [Lee](https://github.com/LeeReindeer).
 "(at\.)" => The fat c<a href="#learn-regex"><strong>at.</strong></a> s<a href="#learn-regex"><strong>at.</strong></a> on the m<a href="#learn-regex"><strong>at.</strong></a>
 </pre>
 
+[测试一下](https://regex101.com/r/y4Au4D/1)
+
 <pre>
-"(at\.)$" => The fat cat sat on the m<a href="#learn-regex"><strong>at.</strong></a>
+"(at\.)$" => The fat cat. sat. on the m<a href="#learn-regex"><strong>at.</strong></a>
 </pre>
+
+https://regex101.com/r/t0AkOd/1
 
 ## 3. 缩写字符集
 
@@ -257,6 +296,8 @@ Translate by [Lee](https://github.com/LeeReindeer).
 "(T|t)he(?=\sfat)" => <a href="#learn-regex"><strong>The</strong></a> fat cat sat on the mat.
 </pre>
 
+[测试一下](https://regex101.com/r/apqJZq/1)
+
 ### 4.2 正向否定预查
 
 正向否定预查用来从输入字符串匹配那些字符接下来的字符是不匹配这个表达式的.正向否定预查的表示方法和正向肯定预查差不多,只是把 `=` 换成 `!` ,变成了 `(?!...)` .让我们来看看下面这个正则表达式 `(T|t)he(?!\sfat)`,她代表:匹配所有不跟着 空格+`fat` 的 `The` 或 `the`.
@@ -264,6 +305,8 @@ Translate by [Lee](https://github.com/LeeReindeer).
 <pre>
 "(T|t)he(?!\sfat)" => The fat cat sat on <a href="#learn-regex"><strong>the</strong></a> mat.
 </pre>
+
+[测试一下](https://regex101.com/r/sswCvQ/1)
 
 ### 4.3 反向肯定预查
 
@@ -273,6 +316,8 @@ Translate by [Lee](https://github.com/LeeReindeer).
 "(?<=(T|t)he\s)(fat|mat)" => The <a href="#learn-regex"><strong>fat</strong></a> cat sat on the <a href="#learn-regex"><strong>mat</strong></a>.
 </pre>
 
+[测试一下](https://regex101.com/r/TZ8DOX/1/)
+
 ### 4.4 反向否定预查
 
 反向否定预查用来匹配以不符合表达式的字符为前缀的字符.反向否定预查用 `(?<!...)` 来表示.比如 `(?&lt;!(T|t)he\s)(cat)` 表示匹配所有不以 `The` 或 `the` +空格 为前缀的 `cat` .
@@ -280,6 +325,8 @@ Translate by [Lee](https://github.com/LeeReindeer).
 <pre>
 "(?&lt;!(T|t)he\s)(cat)" => The cat sat on <a href="#learn-regex"><strong>cat</strong></a>.
 </pre>
+
+[测试一下](https://regex101.com/r/gleYg9/1)
 
 ## 5. 标志
 
@@ -299,9 +346,13 @@ Translate by [Lee](https://github.com/LeeReindeer).
 "The" => <a href="#learn-regex"><strong>The</strong></a> fat cat sat on the mat.
 </pre>
 
+[测试一下](https://regex101.com/r/dpQyf9/1)
+
 <pre>
 "/The/gi" => <a href="#learn-regex"><strong>The</strong></a> fat cat sat on <a href="#learn-regex"><strong>the</strong></a> mat.
 </pre>
+
+[测试一下](https://regex101.com/r/ahfiuh/1)
 
 ### 5.2 全局搜索
 
@@ -311,9 +362,13 @@ Translate by [Lee](https://github.com/LeeReindeer).
 ".(at)" => The <a href="#learn-regex"><strong>fat</strong></a> cat sat on the mat.
 </pre>
 
+[测试一下](https://regex101.com/r/jnk6gM/1)
+
 <pre>
 "/.(at)/g" => The <a href="#learn-regex"><strong>fat</strong></a> <a href="#learn-regex"><strong>cat</strong></a> <a href="#learn-regex"><strong>sat</strong></a> on the <a href="#learn-regex"><strong>mat</strong></a>.
 </pre>
+
+[测试一下](https://regex101.com/r/dO1nef/1)
 
 ### 5.3 多行匹配
 
@@ -325,11 +380,15 @@ Translate by [Lee](https://github.com/LeeReindeer).
                 on the <a href="#learn-regex"><strong>mat.</strong></a>
 </pre>
 
+[测试一下](https://regex101.com/r/hoGMkP/1)
+
 <pre>
 "/.at(.)?$/gm" => The <a href="#learn-regex"><strong>fat</strong></a>
                   cat <a href="#learn-regex"><strong>sat</strong></a>
                   on the <a href="#learn-regex"><strong>mat.</strong></a>
 </pre>
+
+[测试一下](https://regex101.com/r/E88WE2/1)
 
 ## 实例
 
