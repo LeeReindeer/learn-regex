@@ -410,7 +410,8 @@ https://regex101.com/r/t0AkOd/1
 - *日期(YYYY/MM/DD)*: `^([12][0-9])?[0-9]{2}[- /.](0?[1-9]|1[012])[- /.](0?[1-9]|[12][0-9]|3[01])$`
 - *万事达信用卡号码*: `^(5[1-5][0-9]{14})*$`
 - *VISA信用卡号码*: `^(4[0-9]{12}(?:[0-9]{3})?)*$` 
-
+- *Hashtags*: Including hashtags with preceding text (abc123#xyz456) or containing white spaces within square brackets (#[foo bar]) : `\S*#(?:\[[^\]]+\]|\S+)`
+- *@mentions*: `\B@[a-z0-9_-]+`
 ## License
 
 MIT © [Zeeshan Ahmed](mailto:ziishaned@gmail.com)
