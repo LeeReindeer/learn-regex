@@ -194,7 +194,7 @@ Translate by [Lee](https://github.com/LeeReindeer).
 "[0-9]{3}" => The number was 9.<a href="#learn-regex"><strong>99</strong></a><a href="#learn-regex"><strong>9</strong></a>7 but we rounded it off to 10.0.
 </pre>
 
-[测试一下](https://regex101.com/r/gqajq8/1)
+[测试一下](https://regex101.com/r/AbbOIi/1)
 
 ## 2.5 或
 
@@ -260,7 +260,7 @@ Translate by [Lee](https://github.com/LeeReindeer).
 "(at\.)$" => The fat cat. sat. on the m<a href="#learn-regex"><strong>at.</strong></a>
 </pre>
 
-https://regex101.com/r/t0AkOd/1
+[测试一下](https://regex101.com/r/t0AkOd/1)
 
 ## 3. 缩写字符集
 
