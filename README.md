@@ -174,7 +174,7 @@ Translate by [Lee](https://github.com/LeeReindeer).
 
 ## 2.4 大括号
 
-在正则表达式中，大括号也称为量词，用于指定一组字符或一个字符可以重复的次数。比如表达式 `[0-9]{2,3}` 表示:匹配2到3个数字.
+在正则表达式中，大括号也称为量词，用于指定一组字符或一个字符可以重复的次数。比如表达式 `[0-9]{2,3}` 表示:匹配2到3个数字.如果去掉逗号的话,比如 `[0-9]{3}` 表示匹配3个数字.
 
 <pre>
 "[0-9]{2,3}" => The number was 9.<a href="#learn-regex"><strong>999</strong></a>7 but we rounded it off to <a href="#learn-regex"><strong>10</strong></a>.0.
@@ -191,7 +191,7 @@ Translate by [Lee](https://github.com/LeeReindeer).
 [测试一下](https://regex101.com/r/Gdy4w5/1)
 
 <pre>
-"[0-9]{2}" => The number was 9.<a href="#learn-regex"><strong>99</strong></a><a href="#learn-regex"><strong>97</strong></a> but we rounded it off to <a href="#learn-regex"><strong>10</strong></a>.0.
+"[0-9]{3}" => The number was 9.<a href="#learn-regex"><strong>99</strong></a><a href="#learn-regex"><strong>9</strong></a>7 but we rounded it off to 10.0.
 </pre>
 
 [测试一下](https://regex101.com/r/gqajq8/1)
